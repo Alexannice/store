@@ -22,7 +22,15 @@ public class UserController {
      * @return 返回用户登录结果的 Result 对象
      */
     @PostMapping("/login")
-
+    public Result<Users> login(@RequestBody LoginForm loginForm) {
+        String username = loginForm.getUsername();
+        String password = loginForm.getPassword();
+        Users user = userService.login(username, password);
+        if (user != null) {
+            return Result.ok("登录成功",user);
+        }
+        return Result.fail("用户名或密码错误");
+    }
 
     /**
      * 用户注册接口
